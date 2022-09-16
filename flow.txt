@@ -1,5 +1,5 @@
 1. Client Registering their Application
-    . Request:
+    . Request Body:
         -> client-name: string
         -> redirection-endpoint string
             -> there must be a way to know whether this a trusted or a public client.
@@ -12,6 +12,32 @@
         -> redirection-endpoint: string;
         -> authorization-endpoint: string;
         -> token-endpoint: string
+
+2. Client Request for access-tokens
+    . Request Query:
+        --> response_type: string [code, tokens]
+        --> client_id: string
+        --> redirection_endpoint: string
+        --> scope: string or (string,string)
+        --> state: string (must be provided, though IETF standard only recommends)
+    . Success Response Query:
+        --> status code: 302. (redirected)
+        --> code: string
+        --> redirection_endpoint: string
+        --> state: string
+        e.g. redirection_endpoint?code=*&state*
+   . Error Response Query:
+       --> error: string
+       --> error_description: string
+       --> error_uri: string (optional)
+       --> state: string
+       --> possible errors:
+           -> invalid_request: string => when the request is malformed.
+           -> unauthorized_client: string => when the client is not a registered client.
+           -> access_denied: string => when the user denies authorization
+           -> unsupported_response_type: string => when the response_type is not a valid response_type [code,toke]
+           -> server_error: string:  => when an error occurs at the server-side ie not-client-fault
+           -> temporarily_unavailable: string => when the authorization server is not available.
 
 
 
