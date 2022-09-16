@@ -1,0 +1,24 @@
+1. Client Registering their Application
+    . Request:
+        -> client-name: string
+        -> redirection-endpoint string
+            -> there must be a way to know whether this a trusted or a public client.
+            -> must not contain some tags, check this out*
+
+    . Response:
+        -> client-name: string;
+        -> client-secret: string;
+        -> client-ID: string;
+        -> redirection-endpoint: string;
+        -> authorization-endpoint: string;
+        -> token-endpoint: string
+
+
+
+Things to implement.
+*. endpoints to update the client-name,redirection-endpoints.
+*. Ability for users to revoke their access tokens.
+*. For a trusted client send a refresh token.
+*  Allow multiple redirection endpoint.
+*. Try to implement a cron feature whereby users can specify when their auth tokens should be refreshed.
+*. Try to implement a way for mobile to authenticate using this endpoint.
