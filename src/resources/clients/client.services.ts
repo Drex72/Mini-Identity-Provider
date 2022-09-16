@@ -2,10 +2,9 @@ import { injectable } from "inversify";
 import { ClientRepository } from "./client.repository";
 import { CreateClientDTO } from "./create.client.dto";
 import { randomBytes } from "crypto";
-import { plainToInstance } from "class-transformer";
 import { ClientResponseDto } from "./client.response.dto";
-import { Routes } from "../../utils/constants.endpoints";
 import Client from "./client.model";
+import { ClientMapper } from "./client.mapper";
 
 @injectable()
 export default class ClientServices {
@@ -18,9 +17,9 @@ export default class ClientServices {
     const client = (await this.clientRepo.saveAndReturn(
       createClientDTO
     )) as Client;
-    const clientResponseDto = plainToInstance(ClientResponseDto, client);
-    clientResponseDto.token_endpoint = Routes.TOKEN_ENDPOINT;
-    clientResponseDto.authorization_endpoint = Routes.AUTHORIZATION_ENDPOINT;
-    return clientResponseDto;
+    return ClientMapper.clientToClientResponseDTO(
+      new ClientResponseDto(),
+      client
+    );
   }
 }
