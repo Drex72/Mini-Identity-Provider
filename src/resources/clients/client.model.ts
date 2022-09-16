@@ -32,4 +32,8 @@ export default class Client extends BaseEntity implements IClient {
     length: 70,
   })
   private secret: string;
+
+  get clientSecret(): string {
+    return this.secret;
+  }
 }
